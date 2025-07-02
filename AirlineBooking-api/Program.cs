@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FluentMigrator.Runner;
+using AirlineBooking_api.Data;
+using AirlineBooking_api.Passengers.Repositorys;
 
 public class Program
 {
@@ -14,18 +16,18 @@ public class Program
 
         builder.Services.AddCors(options =>
 
-         options.AddPolicy("library-api", domain =>
+         options.AddPolicy("AirplaneBooking-api", domain =>
          domain.WithOrigins("")
          .AllowAnyHeader()
          .AllowAnyMethod()));
 
 
-        //builder.Services.AddDbContext<AppDbContext>(options =>
+        builder.Services.AddDbContext<AppDbContext>(options =>
 
-        //options.UseMySql(builder.Configuration.GetConnectionString("Default")!,
-        //new MySqlServerVersion(new Version(8, 0, 21))));
+        options.UseMySql(builder.Configuration.GetConnectionString("Default")!,
+        new MySqlServerVersion(new Version(8, 0, 21))));
 
-        //builder.Services.AddScoped<ILibraryRepo, LibraryRepo>();
+        builder.Services.AddScoped<IPassengerRepo, PassengerRepo>();
 
         builder.Services.AddFluentMigratorCore()
             .ConfigureRunner(rb => rb.AddMySql5()
@@ -67,7 +69,7 @@ public class Program
 
         }
 
-        app.UseCors("library-api");
+        app.UseCors("AirplaneBooking-api");
         app.Run();
     }
 }

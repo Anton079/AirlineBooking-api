@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using AirlineBooking_api.Airplanes.Models;
+using AirlineBooking_api.Passengers.Models;
 
 namespace AirlineBooking_api.Tickets.Models
 {
@@ -8,19 +10,24 @@ namespace AirlineBooking_api.Tickets.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
+        [Column("ticketId")]
         public int Id { get; set; }
 
         [Required]
-        [Column("customerId")]
-        public int CustomerId { get; set; }
+        [Column("ticketDate")]
+        public DateTime TicketDate { get; set; }
 
         [Required]
-        [Column("date")]
-        public DateTime Date { get; set; }
+        [Column("ticketDescription")]
+        public string TicketDescription { get; set; }
 
-        [Required]
-        [Column("description")]
-        public string Description { get; set; }
+
+        public int AirplaneId { get; set; }
+        public Airplane Airplane { get; set; }
+
+
+        public int PassengerId { get; set; }
+        public Passenger Passenger { get; set; }
+
     }
 }
